@@ -1,0 +1,5 @@
+ mv dalvik ../a444r1-orig-dalvik
+ cp -rd /opt/azstoys/github/a444r1_dalvik dalvik
+ make clean-libdvm clean-libdvm_assert clean-libdvm_sv clean-libdvm_interp
+ make -j4 libdvmaz
+
