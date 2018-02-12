@@ -32,6 +32,8 @@ LOCAL_PATH:= $(call my-dir)
 # Build for the target (device).
 #
 
+LOCAL_SHARED_LIBRARIES := libutils
+
 ifeq ($(TARGET_CPU_SMP),true)
     target_smp_flag := -DANDROID_SMP=1
 else
@@ -44,8 +46,10 @@ WITH_JIT := true
 include $(LOCAL_PATH)/ReconfigureDvm.mk
 
 # Overwrite default settings
-LOCAL_MODULE := libdvm
+LOCAL_MODULE := libdvmaz
+### LOCAL_MODULE := libdvm
 LOCAL_CFLAGS += $(target_smp_flag)
+### -DLOG_INSTR
 
 # Define WITH_ADDRESS_SANITIZER to build an ASan-instrumented version of the
 # library in /system/lib/asan/libdvm.so.
@@ -63,6 +67,7 @@ include $(BUILD_SHARED_LIBRARY)
 # Derivation #1
 # Enable assertions and JIT tuning
 include $(LOCAL_PATH)/ReconfigureDvm.mk
+LOCAL_SHARED_LIBRARIES := libutils
 LOCAL_CFLAGS += -UNDEBUG -DDEBUG=1 -DLOG_NDEBUG=1 -DWITH_DALVIK_ASSERT \
                 -DWITH_JIT_TUNING $(target_smp_flag)
 # TODO: split out the asflags.
@@ -75,6 +80,7 @@ ifneq ($(dvm_arch),mips)    # MIPS support for self-verification is incomplete
     # Derivation #2
     # Enable assertions and JIT self-verification
     include $(LOCAL_PATH)/ReconfigureDvm.mk
+    LOCAL_SHARED_LIBRARIES := libutils
     LOCAL_CFLAGS += -UNDEBUG -DDEBUG=1 -DLOG_NDEBUG=1 -DWITH_DALVIK_ASSERT \
                     -DWITH_SELF_VERIFICATION $(target_smp_flag)
     # TODO: split out the asflags.
@@ -88,6 +94,7 @@ endif # dvm_arch!=mips
 # Compile out the JIT
 WITH_JIT := false
 include $(LOCAL_PATH)/ReconfigureDvm.mk
+LOCAL_SHARED_LIBRARIES := libutils
 LOCAL_CFLAGS += $(target_smp_flag)
 # TODO: split out the asflags.
 LOCAL_ASFLAGS := $(LOCAL_CFLAGS)
