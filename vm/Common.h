@@ -21,7 +21,7 @@
 #define DALVIK_COMMON_H_
 
 #ifndef LOG_TAG
-# define LOG_TAG "dalvikvm"
+# define LOG_TAG "AZdalvikvm"
 #endif
 
 #include <stdbool.h>

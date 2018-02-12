@@ -29,9 +29,8 @@
 #include "alloc/MarkSweep.h"
 #include "os/os.h"
 
-#include <sys/mman.h>
-#include <sys/resource.h>
 #include <sys/time.h>
+#include <sys/resource.h>
 #include <limits.h>
 #include <errno.h>
 
@@ -669,7 +668,7 @@ void dvmCollectGarbageInternal(const GcSpec* spec)
         u4 markSweepTime = dirtyEnd - rootStart;
         u4 gcTime = gcEnd - rootStart;
         bool isSmall = numBytesFreed > 0 && numBytesFreed < 1024;
-        ALOGD("%s freed %s%zdK, %d%% free %zdK/%zdK, paused %ums, total %ums",
+        ALOGD("AZAZAZAZ: %s freed %s%zdK, %d%% free %zdK/%zdK, paused %ums, total %ums",
              spec->reason,
              isSmall ? "<" : "",
              numBytesFreed ? MAX(numBytesFreed / 1024, 1) : 0,
@@ -681,7 +680,7 @@ void dvmCollectGarbageInternal(const GcSpec* spec)
         u4 dirtyTime = dirtyEnd - dirtyStart;
         u4 gcTime = gcEnd - rootStart;
         bool isSmall = numBytesFreed > 0 && numBytesFreed < 1024;
-        ALOGD("%s freed %s%zdK, %d%% free %zdK/%zdK, paused %ums+%ums, total %ums",
+        ALOGD("AZAZAZ: %s freed %s%zdK, %d%% free %zdK/%zdK, paused %ums+%ums, total %ums",
              spec->reason,
              isSmall ? "<" : "",
              numBytesFreed ? MAX(numBytesFreed / 1024, 1) : 0,
@@ -727,7 +726,7 @@ void dvmCollectGarbageInternal(const GcSpec* spec)
  */
 bool dvmWaitForConcurrentGcToComplete()
 {
-    ATRACE_BEGIN("GC: Wait For Concurrent");
+    ATRACE_BEGIN("AZAZAZAZAZ::GC: Wait For Concurrent");
     bool waited = gDvm.gcHeap->gcRunning;
     Thread *self = dvmThreadSelf();
     assert(self != NULL);
@@ -739,7 +738,7 @@ bool dvmWaitForConcurrentGcToComplete()
     }
     u4 end = dvmGetRelativeTimeMsec();
     if (end - start > 0) {
-        ALOGD("WAIT_FOR_CONCURRENT_GC blocked %ums", end - start);
+        ALOGD("AZAZAZAZAZ::WAIT_FOR_CONCURRENT_GC blocked %ums", end - start);
     }
     ATRACE_END();
     return waited;
